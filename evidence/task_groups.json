@@ -1,0 +1,28 @@
+{
+  "Low": [
+    "depth_prediction_oc",
+    "depth_prediction_oo",
+    "distance_prediction_oc",
+    "distance_prediction_oo",
+    "depth_prediction_oc_mv",
+    "depth_prediction_oo_mv",
+    "distance_prediction_oo_mv",
+    "distance_prediction_oc_mv"
+  ],
+  "Middle": [
+    "view_change_infer",
+    "position_matching",
+    "camera_motion_infer"
+  ],
+  "High": [
+    "obj_spatial_relation_oo",
+    "obj_spatial_relation_oc_mv",
+    "obj_spatial_relation_oo_mv",
+    "spatial_imagination_oc",
+    "spatial_imagination_oo",
+    "spatial_imagination_oc_mv",
+    "spatial_imagination_oo_mv",
+    "distance_infer_center_oo",
+    "distance_infer_center_oo_mv"
+  ]
+}

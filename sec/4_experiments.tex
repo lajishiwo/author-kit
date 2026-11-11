@@ -1,0 +1,47 @@
+\section{Experiments}
+\label{sec:experiments}
+\subsection{Protocol and Evidence Status}
+\paragraph{Data and metrics.}
+We use SPAR-Bench~\cite{spar} with the local 20-task configuration: Tiny has 1,000 samples and Full has 7,211. Overall is the unweighted mean of the 20 task scores, not pooled sample accuracy. Low, Middle, and High follow the local benchmark grouping: eight depth/distance tasks, three view-change/matching/camera-motion tasks, and nine relation/imagination/center-distance tasks, respectively. Category scores include task-specific numerical scoring and should be read on the benchmark's 0--100 scale. Tiny is a smaller evaluation set, not an independent replication of Full.
+
+\paragraph{Training.}
+Balanced20 contains 100,000 samples, with 5,000 per category. The planned 25,000 optimizer steps consume one epoch with micro-batch size 1 and gradient accumulation 4. AdamW uses weight decay 0.01, gradient clipping 1, BF16, and 100 warmup steps followed by constant learning rates: $2\times10^{-5}$ for language LoRA and $10^{-4}$ for new modules. LoRA uses rank 16, scaling alpha 32, and dropout 0.05. Training and development use a 50,176-pixel image budget; formal evaluation uses 230,400. These are preprocessing pixel limits, not image counts.
+
+\paragraph{Comparisons and decoding.}
+B0 is the original 3DThinker adaptation without the external fusion branch. GENERIC and CGMF share RGB-D and measured pose inputs and have identical trainable budgets. B0 has only the 29,933,568 language LoRA parameters. All formal evaluations use greedy decoding, the original eight latents, and a 4,096-token generation limit. The planned checkpoints are 10K, 15K, and 25K. Current execution assigns CGMF seed0 to GPU1 and GENERIC seed0 to GPU0; these assignments describe scheduling, not experimental factors.
+
+\paragraph{Artifact verification.}
+The reported 10K comparisons are from completed seed0 evaluations. We checked metrics, protocol records, completion markers, and checkpoint-step correspondence. The six evaluation artifacts contain the expected sample counts. Integrity summaries report no empty answers, truncations, scoring exceptions, or wrong latent counts. CGMF and GENERIC protocols identify their respective step-10,000 checkpoints and recorded hashes. B0 reuses historical predictions at the matched optimizer budget; its earlier audit confirms the evaluation pixel budget but lacks a complete original source-code hash manifest. Accordingly, B0 is a historical comparison with a reproducibility limitation, not a newly rerun baseline.
+
+\textbf{Pending results.} Only the complete three-arm 10K comparison is analyzed here. Matched 15K and 25K CGMF/GENERIC evaluations, additional seeds, and the intervention/ablation suite are pending. Historical B0 scores at later steps are not paired with missing treatment results to suggest a completed comparison.
+
+\subsection{Interim Main Results}
+\input{sec/results_main}
+At 10K, CGMF exceeds GENERIC by 0.942 points on Tiny and 0.460 on Full. Relative to B0, its differences are $-0.058$ and $-0.448$ points, respectively. The small rounding difference between displayed scores and differences comes from computing differences before rounding. Thus the verified aggregate result does not establish improved performance over the backbone despite the additional geometric inputs.
+
+The existing paired analysis uses 5,000 task-stratified bootstrap resamples and nominal 95\% intervals. Full Overall differences are $-0.448$ [$-1.141$, $+0.226$] for CGMF minus B0, and $+0.460$ [$-0.235$, $+1.148$] for CGMF minus GENERIC. Both intervals cross zero. GENERIC minus B0 is $-0.908$ [$-1.680$, $-0.128$]. These are single-seed intervals over evaluation samples, not estimates of training-seed uncertainty, and are not adjusted for multiple comparisons. The existing scene-cluster intervals are likewise unresolved for CGMF minus B0 ($[-1.104,+0.205]$) and CGMF minus GENERIC ($[-0.201,+1.144]$), accounting for shared-scene dependence in the evaluation data.
+
+\subsection{Task and Reasoning-Level Analysis}
+\input{sec/results_tasks}
+The aggregate hides substantial task variation. On Full, CGMF improves view-change inference over B0 by 2.870 points and object--camera distance prediction by 2.341. Conversely, multi-view object--object spatial relations drop by 6.648 points and multi-view object--object spatial imagination by 5.882. Camera-motion inference drops by 0.500, while position matching is unchanged. These descriptive changes do not establish task-specific significance.
+
+The reasoning-level breakdown is likewise mixed (Table~\ref{tab:main}). On Full, CGMF exceeds B0 in Low and Middle scores by 0.498 and 0.790 points but falls below it in High by 1.702. Its advantage over GENERIC is concentrated more strongly in High (0.954 points) than in Low or Middle (approximately 0.056 each). This pattern is compatible with several explanations, including heterogeneous usefulness of local features, optimization effects, or variation in task composition. It does not identify a causal mechanism.
+
+\subsection{Planned Causal Interventions and Ablations}
+\label{sec:interventions}
+A separate local engineering report records input and latent-substitution checks on six questions from six scenes, with one example per task. This pilot is too small for task-level performance or mediation conclusions; its numerical results are not used as evidence here. The following larger, controlled tests remain necessary, and no completed full-scale intervention or ablation finding is asserted.
+
+\paragraph{Correct versus wrong pose.}
+Hold RGB, question, depth, and cached BIP3D feature values fixed while replacing only the fusion pose embeddings with those from a mismatched scene or a consistently permuted view assignment. Match view counts and preserve valid rotations. This isolates the explicit camera-embedding path. A separate end-to-end perturbation should recompute geometry under altered extrinsics, because BIP3D also consumes calibration. Reporting both prevents conflating the two pose pathways. Pair sample identifiers and decoding settings across conditions.
+
+\paragraph{Correct versus wrong geometry.}
+Hold RGB, question, and pose embeddings fixed while substituting another scene's cached geometric feature values with matched token shapes. A within-scene view swap can separately probe view association in multi-view cases. These are sensitivity tests under deliberately mismatched inputs; degradation alone would not show beneficial use under correct inputs. Compare both interventions with GENERIC and report category-level paired differences.
+
+\paragraph{K/V and gate conditioning.}
+Train controls that replace only camera-conditioned K/V biasing, only camera-conditioned gating, and both (GENERIC). Keep the remaining tensors, input data, parameter budget, schedule, and seed initialization matched. Inference-time disabling may be informative but must be labeled separately from retraining ablations. Together these comparisons can distinguish the two camera-specific adaptations currently changed jointly.
+
+\paragraph{Latent-related analysis.}
+With fixed checkpoints and paired inputs, measure how pose and geometry interventions change recurrent hidden states and final answers. Such measurements test propagation through the enhanced prefix. Nonzero residual scales, altered attention, or changed latent states are not sufficient evidence of improved spatial reasoning. Any change in latent count or recurrence requires a separately specified experiment because the present system retains eight steps throughout.
+
+\subsection{Limitations and Scope}
+The current evidence covers one seed and an intermediate budget. PIGeR uses measured depth and calibration that RGB-only B0 does not receive, and the historical B0 audit is incomplete. The compact, question-independent geometry sampling may omit relevant object detail. CGMF does not explicitly enforce point correspondences, deterministic geometric constraints, or 3D equivariance. The system requires additional extraction and fusion computation even though it preserves the language input length; no measured latency or memory advantage is claimed. No VLA simulation or real-robot experiments have been conducted. Embodied deployment and robustness to missing or noisy calibration are future work.

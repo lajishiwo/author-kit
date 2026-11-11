@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-11",
+  "timezone": "Asia/Shanghai",
+  "branch": "paper/piger-cvpr2027",
+  "engine": "Tectonic 0.17.0 (XeTeX), T1 font encoding",
+  "pdf_pages": 6,
+  "checks": [
+    "compile completed",
+    "no LaTeX errors",
+    "no undefined references or citations",
+    "no overfull boxes",
+    "no font substitution warnings",
+    "anonymous review mode",
+    "no identifying paths or email addresses in PDF",
+    "all six metric artifacts matched",
+    "Overall and all cognitive groups recomputed",
+    "CGMF/GENERIC MODEL.json hashes matched to protocol",
+    "official style, preamble and bibliography style unchanged"
+  ],
+  "pdf_sha256": "98b6899aa6bbcd045044338304307b8595b578911aa5d62d14a5441e3b15c733",
+  "known_toolchain_warning": "Bundled lineno.sty line 296 contains a non-UTF-8 byte; Tectonic replaces it while reading. The official package was not edited."
+}

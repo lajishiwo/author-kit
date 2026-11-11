@@ -1,0 +1,13 @@
+\section{Related Work}
+\label{sec:related}
+\paragraph{Continuous spatial reasoning.}
+3DThinker connects geometric imagination to spatial reasoning from limited views~\cite{thinker}. PIGeR inherits its backbone and recurrent latent mechanism. Our study changes the visual evidence available before latent recurrence, rather than the recurrence itself. This distinction is essential when attributing any downstream effect: geometry-conditioned inputs do not imply that individual latent states implement a known geometric operation.
+
+\paragraph{Camera-guided multimodal fusion.}
+SpaceMind introduces CGMF for spatial reasoning, using camera representations to guide fusion between visual and spatial features~\cite{spacemind}. We reuse that module's camera-conditioned feature bias, importance weighting, and output gating. Our adaptation uses measured relative poses and frozen BIP3D features at the post-merger interface of 3DThinker. We load no pretrained SpaceMind CGMF weights. The comparison with GENERIC evaluates the conditioning choices in this setting, rather than establishing novelty for CGMF.
+
+\paragraph{Explicit RGB-D features.}
+BIP3D bridges image features and 3D perception for embodied intelligence~\cite{bip3d}. We use its frozen Tiny Det feature extractor as a source of local geometric representations, without retraining the encoder or claiming a new 3D perception method. Rotation is encoded using the first two columns of a rotation matrix, following the continuous 6D representation studied by Zhou \etal~\cite{rotation}. This encoding is a neural-network input representation; it does not impose equivariance on fusion.
+
+\paragraph{Adaptation and evaluation.}
+LoRA learns low-rank updates while keeping backbone weights frozen~\cite{lora}; we apply it to the language side. SPAR supplies spatial perception and reasoning tasks with RGB-D and camera metadata~\cite{spar}. We use the local 20-category evaluation configuration and report its task macro average. The benchmark's task scores should not all be interpreted as binary accuracy. Comparisons to RGB-only B0 must disclose the additional measured depth and calibration used by PIGeR and GENERIC.

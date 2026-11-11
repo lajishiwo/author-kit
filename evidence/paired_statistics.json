@@ -1,0 +1,356 @@
+{
+  "seed0/step10000/tiny/CGMF-B0": {
+    "Overall": {
+      "difference_pp": -0.05800000000000018,
+      "task_stratified_CI95_pp": [
+        -2.016,
+        1.8821499999999973
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -2.021469007797646,
+          2.0538078479264845
+        ]
+      },
+      "N": 1000,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -4.0,
+        "depth_prediction_oc": -0.6000000000000003,
+        "depth_prediction_oc_mv": -3.0,
+        "depth_prediction_oo": 1.4,
+        "depth_prediction_oo_mv": 2.2,
+        "distance_infer_center_oo": -6.0,
+        "distance_infer_center_oo_mv": 12.0,
+        "distance_prediction_oc": 4.0,
+        "distance_prediction_oc_mv": 4.440892098500626e-16,
+        "distance_prediction_oo": -3.0000000000000004,
+        "distance_prediction_oo_mv": 0.9999999999999996,
+        "obj_spatial_relation_oc_mv": -2.0,
+        "obj_spatial_relation_oo": -4.0,
+        "obj_spatial_relation_oo_mv": 2.0,
+        "position_matching": -4.0,
+        "spatial_imagination_oc": 2.0,
+        "spatial_imagination_oc_mv": 2.0,
+        "spatial_imagination_oo": 4.0,
+        "spatial_imagination_oo_mv": -8.0,
+        "view_change_infer": 2.84
+      }
+    },
+    "PoseScore": {
+      "difference_pp": -1.7200000000000004,
+      "task_stratified_CI95_pp": [
+        -7.320333333333333,
+        3.826666666666666
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -7.883149148007977,
+          4.343740420696578
+        ]
+      },
+      "N": 150,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -4.0,
+        "position_matching": -4.0,
+        "view_change_infer": 2.84
+      }
+    }
+  },
+  "seed0/step10000/tiny/GENERIC-B0": {
+    "Overall": {
+      "difference_pp": -0.9999999999999999,
+      "task_stratified_CI95_pp": [
+        -3.0481499999999997,
+        0.9983499999999951
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -3.2686521979116607,
+          1.2746579565004372
+        ]
+      },
+      "N": 1000,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -4.0,
+        "depth_prediction_oc": -1.4,
+        "depth_prediction_oc_mv": -1.0,
+        "depth_prediction_oo": -2.0,
+        "depth_prediction_oo_mv": 0.6000000000000001,
+        "distance_infer_center_oo": -8.0,
+        "distance_infer_center_oo_mv": 10.0,
+        "distance_prediction_oc": 3.8000000000000007,
+        "distance_prediction_oc_mv": -4.0,
+        "distance_prediction_oo": -8.0,
+        "distance_prediction_oo_mv": 7.3999999999999995,
+        "obj_spatial_relation_oc_mv": 12.0,
+        "obj_spatial_relation_oo": -10.0,
+        "obj_spatial_relation_oo_mv": -8.0,
+        "position_matching": -4.0,
+        "spatial_imagination_oc": 2.0,
+        "spatial_imagination_oc_mv": 4.0,
+        "spatial_imagination_oo": -4.0,
+        "spatial_imagination_oo_mv": -8.0,
+        "view_change_infer": 2.5999999999999996
+      }
+    },
+    "PoseScore": {
+      "difference_pp": -1.8000000000000003,
+      "task_stratified_CI95_pp": [
+        -7.12,
+        3.426999999999995
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -8.149749009855393,
+          4.036687430480956
+        ]
+      },
+      "N": 150,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -4.0,
+        "position_matching": -4.0,
+        "view_change_infer": 2.5999999999999996
+      }
+    }
+  },
+  "seed0/step10000/tiny/CGMF-GENERIC": {
+    "Overall": {
+      "difference_pp": 0.9420000000000002,
+      "task_stratified_CI95_pp": [
+        -0.8980999999999999,
+        2.7039999999999993
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -0.7925181272048104,
+          2.7186606277473087
+        ]
+      },
+      "N": 1000,
+      "per_task_difference_pp": {
+        "camera_motion_infer": 0.0,
+        "depth_prediction_oc": 0.8000000000000002,
+        "depth_prediction_oc_mv": -1.9999999999999998,
+        "depth_prediction_oo": 3.4000000000000004,
+        "depth_prediction_oo_mv": 1.6,
+        "distance_infer_center_oo": 2.0,
+        "distance_infer_center_oo_mv": 2.0,
+        "distance_prediction_oc": 0.19999999999999912,
+        "distance_prediction_oc_mv": 4.0,
+        "distance_prediction_oo": 5.0,
+        "distance_prediction_oo_mv": -6.4,
+        "obj_spatial_relation_oc_mv": -14.000000000000002,
+        "obj_spatial_relation_oo": 6.0,
+        "obj_spatial_relation_oo_mv": 10.0,
+        "position_matching": 0.0,
+        "spatial_imagination_oc": 0.0,
+        "spatial_imagination_oc_mv": -2.0,
+        "spatial_imagination_oo": 8.0,
+        "spatial_imagination_oo_mv": 0.0,
+        "view_change_infer": 0.2400000000000001
+      }
+    },
+    "PoseScore": {
+      "difference_pp": 0.08000000000000004,
+      "task_stratified_CI95_pp": [
+        -4.32,
+        4.666999999999995
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -4.155094654278227,
+          4.320024626761955
+        ]
+      },
+      "N": 150,
+      "per_task_difference_pp": {
+        "camera_motion_infer": 0.0,
+        "position_matching": 0.0,
+        "view_change_infer": 0.2400000000000001
+      }
+    }
+  },
+  "seed0/step10000/full/CGMF-B0": {
+    "Overall": {
+      "difference_pp": -0.4483345737467897,
+      "task_stratified_CI95_pp": [
+        -1.1410707150619372,
+        0.22580859602211373
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -1.1043626234182158,
+          0.20489299831901853
+        ]
+      },
+      "N": 7211,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -0.5,
+        "depth_prediction_oc": -0.9444444444444446,
+        "depth_prediction_oc_mv": -0.0312500000000001,
+        "depth_prediction_oo": 0.08064516129032256,
+        "depth_prediction_oo_mv": 0.8333333333333335,
+        "distance_infer_center_oo": 1.4705882352941175,
+        "distance_infer_center_oo_mv": 0.5952380952380952,
+        "distance_prediction_oc": 2.3409669211195925,
+        "distance_prediction_oc_mv": 0.6027397260273972,
+        "distance_prediction_oo": -0.24793388429752067,
+        "distance_prediction_oo_mv": 1.3468013468013464,
+        "obj_spatial_relation_oc_mv": 0.0,
+        "obj_spatial_relation_oo": -0.5494505494505495,
+        "obj_spatial_relation_oo_mv": -6.64819944598338,
+        "position_matching": 0.0,
+        "spatial_imagination_oc": -2.6881720430107525,
+        "spatial_imagination_oc_mv": -0.29069767441860467,
+        "spatial_imagination_oo": -1.3245033112582782,
+        "spatial_imagination_oo_mv": -5.88235294117647,
+        "view_change_infer": 2.87
+      }
+    },
+    "PoseScore": {
+      "difference_pp": 0.7899999999999999,
+      "task_stratified_CI95_pp": [
+        -1.0516301950805764,
+        2.5771310432569963
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -0.9126513816876921,
+          2.5558476839382123
+        ]
+      },
+      "N": 1193,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -0.5,
+        "position_matching": 0.0,
+        "view_change_infer": 2.87
+      }
+    }
+  },
+  "seed0/step10000/full/GENERIC-B0": {
+    "Overall": {
+      "difference_pp": -0.9084428983975511,
+      "task_stratified_CI95_pp": [
+        -1.6797754404577692,
+        -0.12800284279058113
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -1.7511566683580668,
+          -0.07893750591149828
+        ]
+      },
+      "N": 7211,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -0.25,
+        "depth_prediction_oc": -1.4722222222222223,
+        "depth_prediction_oc_mv": -0.2187500000000001,
+        "depth_prediction_oo": 1.4247311827956992,
+        "depth_prediction_oo_mv": 1.021505376344086,
+        "distance_infer_center_oo": -1.4705882352941175,
+        "distance_infer_center_oo_mv": 3.571428571428571,
+        "distance_prediction_oc": 0.5089058524173028,
+        "distance_prediction_oc_mv": 0.08219178082191787,
+        "distance_prediction_oo": -0.13774104683195604,
+        "distance_prediction_oo_mv": 2.323232323232323,
+        "obj_spatial_relation_oc_mv": 3.75,
+        "obj_spatial_relation_oo": -7.967032967032966,
+        "obj_spatial_relation_oo_mv": -6.9252077562326875,
+        "position_matching": 1.2722646310432568,
+        "spatial_imagination_oc": -4.301075268817205,
+        "spatial_imagination_oc_mv": 2.3255813953488373,
+        "spatial_imagination_oo": -3.642384105960265,
+        "spatial_imagination_oo_mv": -9.243697478991598,
+        "view_change_infer": 1.1799999999999997
+      }
+    },
+    "PoseScore": {
+      "difference_pp": 0.7340882103477523,
+      "task_stratified_CI95_pp": [
+        -1.3290946776929604,
+        2.76170122985581
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -1.2226895236408177,
+          2.7153796066762226
+        ]
+      },
+      "N": 1193,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -0.25,
+        "position_matching": 1.2722646310432568,
+        "view_change_infer": 1.1799999999999997
+      }
+    }
+  },
+  "seed0/step10000/full/CGMF-GENERIC": {
+    "Overall": {
+      "difference_pp": 0.46010832465076146,
+      "task_stratified_CI95_pp": [
+        -0.23523148035013397,
+        1.1479736727990635
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -0.20059436376468742,
+          1.1440137841594944
+        ]
+      },
+      "N": 7211,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -0.25,
+        "depth_prediction_oc": 0.5277777777777776,
+        "depth_prediction_oc_mv": 0.18749999999999983,
+        "depth_prediction_oo": -1.3440860215053765,
+        "depth_prediction_oo_mv": -0.18817204301075274,
+        "distance_infer_center_oo": 2.941176470588235,
+        "distance_infer_center_oo_mv": -2.976190476190476,
+        "distance_prediction_oc": 1.8320610687022898,
+        "distance_prediction_oc_mv": 0.5205479452054794,
+        "distance_prediction_oo": -0.11019283746556445,
+        "distance_prediction_oo_mv": -0.9764309764309762,
+        "obj_spatial_relation_oc_mv": -3.75,
+        "obj_spatial_relation_oo": 7.417582417582418,
+        "obj_spatial_relation_oo_mv": 0.2770083102493075,
+        "position_matching": -1.2722646310432568,
+        "spatial_imagination_oc": 1.6129032258064515,
+        "spatial_imagination_oc_mv": -2.616279069767442,
+        "spatial_imagination_oo": 2.3178807947019866,
+        "spatial_imagination_oo_mv": 3.361344537815126,
+        "view_change_infer": 1.6900000000000006
+      }
+    },
+    "PoseScore": {
+      "difference_pp": 0.055911789652247856,
+      "task_stratified_CI95_pp": [
+        -1.70810082697201,
+        1.7856538379983018
+      ],
+      "scene_cluster": {
+        "valid_replicates": 5000,
+        "CI95_pp": [
+          -1.7608338071779615,
+          1.90010446251322
+        ]
+      },
+      "N": 1193,
+      "per_task_difference_pp": {
+        "camera_motion_infer": -0.25,
+        "position_matching": -1.2722646310432568,
+        "view_change_infer": 1.6900000000000006
+      }
+    }
+  }
+}

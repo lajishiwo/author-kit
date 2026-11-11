@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "same_initial_language_adapter": true,
+  "same_initial_fusion_tensors": true,
+  "checks": {
+    "CGMF": {
+      "status": "PASS",
+      "gradients_seen": {
+        "language": true,
+        "pose_projection": true,
+        "bip_projection": true,
+        "fusion": true,
+        "gate": true
+      },
+      "optimizer_reload": true,
+      "greedy_before_after_reload_identical": true
+    },
+    "GENERIC": {
+      "status": "PASS",
+      "gradients_seen": {
+        "language": true,
+        "pose_projection": true,
+        "bip_projection": true,
+        "fusion": true,
+        "gate": true
+      },
+      "optimizer_reload": true,
+      "greedy_before_after_reload_identical": true
+    },
+    "B0": {
+      "status": "PASS",
+      "gradients_seen": {
+        "language": true
+      },
+      "optimizer_reload": true,
+      "greedy_before_after_reload_identical": true
+    }
+  },
+  "parameters": {
+    "CGMF": {
+      "language_trainable": 29933568,
+      "new_trainable": 10677890
+    },
+    "GENERIC": {
+      "language_trainable": 29933568,
+      "new_trainable": 10677890
+    },
+    "B0": {
+      "language_trainable": 29933568,
+      "new_trainable": 0
+    }
+  }
+}
