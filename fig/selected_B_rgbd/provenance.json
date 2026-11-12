@@ -1,0 +1,68 @@
+{
+  "name": "B_meeting_table",
+  "scene_id": "1e52e4c88f",
+  "subject": "Meeting table",
+  "views": [
+    {
+      "view": 1,
+      "frame": "6930",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/image_color/6930.jpg",
+      "export": "B_meeting_table/view1_6930.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "a56df084f0cbcbc0e079862cef4e6902aff6c6b5beb89dcdebc9976f4fac48fb",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/image_depth/6930.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/pose/6930.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/intrinsic"
+    },
+    {
+      "view": 2,
+      "frame": "7520",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/image_color/7520.jpg",
+      "export": "B_meeting_table/view2_7520.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "f0d342d58e394a59ac2c85edbe765661e14c23186668263eae6b745b336e4955",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/image_depth/7520.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/pose/7520.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/intrinsic"
+    },
+    {
+      "view": 3,
+      "frame": "14130",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/image_color/14130.jpg",
+      "export": "B_meeting_table/view3_14130.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "5d4a1be3da7da2f080af68c3da2ff6d55d572dc89b8304e8ba423f7719d85847",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/image_depth/14130.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/pose/14130.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/1e52e4c88f/intrinsic"
+    }
+  ],
+  "visualization": {
+    "depth_units": "millimeters in raw PNG; meters in legend",
+    "range_m": [
+      0,
+      7
+    ],
+    "palette": "interpolated viridis-style sequential palette; near purple, far yellow",
+    "invalid_depth": "black",
+    "depth_original_resolution": [
+      256,
+      192
+    ],
+    "rgb_resolution": [
+      1920,
+      1440
+    ],
+    "depth_display_resampling": "nearest-neighbor; no reprojection/registration applied",
+    "layout": "RGB top, corresponding depth bottom; three views left to right"
+  }
+}

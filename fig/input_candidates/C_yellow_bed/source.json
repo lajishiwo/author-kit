@@ -1,0 +1,49 @@
+{
+  "name": "C_yellow_bed",
+  "scene_id": "79eb3fbc63",
+  "subject": "Yellow bed",
+  "views": [
+    {
+      "view": 1,
+      "frame": "9630",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/image_color/9630.jpg",
+      "export": "C_yellow_bed/view1_9630.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "8bf1b3c2af283bacaaaeea2f04ec46cab5fd10c9a0ef6c3416862ef7f6c85e75",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/image_depth/9630.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/pose/9630.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/intrinsic"
+    },
+    {
+      "view": 2,
+      "frame": "10100",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/image_color/10100.jpg",
+      "export": "C_yellow_bed/view2_10100.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "84b2fea88184ba310cc5413a591ac9801be46551f55df7f553fe5cd1dc769382",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/image_depth/10100.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/pose/10100.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/intrinsic"
+    },
+    {
+      "view": 3,
+      "frame": "14720",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/image_color/14720.jpg",
+      "export": "C_yellow_bed/view3_14720.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "3fd02a5c221ecad11e05da360ff5a35a90a868132a9e64f87a7e03eac16da11f",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/image_depth/14720.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/pose/14720.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/79eb3fbc63/intrinsic"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-12",
+  "modified_manuscript_sections": [
+    "sec/1_intro.tex",
+    "sec/2_related_work.tex",
+    "sec/3_method.tex"
+  ],
+  "unchanged": [
+    "sec/0_abstract.tex",
+    "sec/4_experiments.tex",
+    "sec/results_main.tex",
+    "sec/results_tasks.tex",
+    "sec/5_conclusion.tex"
+  ],
+  "pdf_pages": 7,
+  "checks_passed": [
+    "compilation",
+    "original mathematical expressions preserved",
+    "citation and reference keys preserved",
+    "no additional emphasis",
+    "no possessive forms",
+    "no paragraph-to-list conversion",
+    "no overfull boxes",
+    "no unresolved references",
+    "no font substitution"
+  ],
+  "pdf_sha256": "41c54b4ff4e4fa8198f670c9b85b66987bb7592071c5db48c6de822f2dacf17f"
+}

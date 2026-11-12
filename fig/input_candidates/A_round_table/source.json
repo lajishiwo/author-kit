@@ -1,0 +1,49 @@
+{
+  "name": "A_round_table",
+  "scene_id": "114e349224",
+  "subject": "Round table and blue stools",
+  "views": [
+    {
+      "view": 1,
+      "frame": "2420",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/image_color/2420.jpg",
+      "export": "A_round_table/view1_2420.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "1e5bf6ab69921540de704254128d01e2e7dddfd6c73255f570e0e38385a5e014",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/image_depth/2420.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/pose/2420.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/intrinsic"
+    },
+    {
+      "view": 2,
+      "frame": "2450",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/image_color/2450.jpg",
+      "export": "A_round_table/view2_2450.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "ce6b6aa86fae1443e54b5934dd78db0366cda131754a001b54165c030a94336a",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/image_depth/2450.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/pose/2450.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/intrinsic"
+    },
+    {
+      "view": 3,
+      "frame": "5300",
+      "image": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/image_color/5300.jpg",
+      "export": "A_round_table/view3_5300.jpg",
+      "size": [
+        1920,
+        1440
+      ],
+      "sha256": "594f71a905a60fce05de7056049ba8ca20e0ce600f5bfe7ac732443a0ae5bb0c",
+      "depth": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/image_depth/5300.png",
+      "pose": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/pose/5300.txt",
+      "intrinsic_directory": "/data/djt/SPAR/datasets/SPAR-7M-RGBD/spar/scannetpp/images/114e349224/intrinsic"
+    }
+  ]
+}

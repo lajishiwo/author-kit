@@ -1,21 +1,21 @@
 \section{Method}
 \label{sec:method}
 \subsection{Inputs and Fusion Interface}
-For a sample with $S$ views, the inputs comprise RGB images $I_i$, measured depth $D_i$, intrinsics $K_i$, camera-to-world transforms $T_{w\leftarrow i}$, and a question $q$. The frozen Qwen visual encoder and merger produce $V_i\in\mathbb{R}^{n_i\times2048}$. A geometric branch produces $G_i\in\mathbb{R}^{16\times2048}$ and one camera embedding $P_i\in\mathbb{R}^{2048}$ per view. Fusion returns $V'_i$ of exactly the same shape as $V_i$.
+For a sample with $S$ views, the inputs comprise RGB images $I_i$, measured depth $D_i$, intrinsics $K_i$, camera-to-world transforms $T_{w\leftarrow i}$, and a question $q$. We distinguish the color and depth intrinsics during registration. Training and development images include the official task markers; public evaluation images already contain them. Both visual branches receive the same marked source images, with separate resizing and normalization. The frozen Qwen visual encoder and merger produce $V_i\in\mathbb{R}^{n_i\times2048}$. A geometric branch produces $G_i\in\mathbb{R}^{16\times2048}$ and one camera embedding $P_i\in\mathbb{R}^{2048}$ per view. Fusion returns $V'_i$ of exactly the same shape as $V_i$.
 
-The language model consumes the original question and the enhanced visual prefix. Camera and geometry embeddings are not appended to its input sequence. The fusion module has no question input, and there is no direct geometry-to-latent cross-attention. Figure~\ref{fig:architecture} specifies the interface; the supplied architecture artwork is not present in the current repository.
+The language model receives the question and the enhanced visual prefix. The enhanced embeddings replace the existing image placeholders; camera and geometry embeddings are not appended to the language input. CGMF and geometric feature sampling do not directly receive question text, although image markers can provide indirect target cues. Invalid geometric entries are masked, and fusion is bypassed when no valid geometry is available. Figure~\ref{fig:architecture} summarizes the interface.
 
 \begin{figure}[t]
 \centering
 \fbox{\parbox{0.92\columnwidth}{\small
-\textbf{Architecture artwork pending.}\\
+\textbf{Architecture interface.}\\
 RGB $\rightarrow$ frozen Qwen encoder/merger $\rightarrow V$.\\
 RGB-D and calibration $\rightarrow$ frozen BIP3D $\rightarrow G$.\\
 Relative pose $\rightarrow$ pose projection $\rightarrow P$.\\
 $(V,G,P)$ $\rightarrow$ adapted CGMF and residual scale $\rightarrow V'$.\\
 $(V',q)$ $\rightarrow$ language model with LoRA $\rightarrow$ eight continuous latents $\rightarrow$ answer.
 }}
-\caption{PIGeR data-flow specification, pending replacement with the actual architecture figure. The geometric branch changes existing visual tokens before language processing; it adds no language-model input tokens.}
+\caption{PIGeR data flow. Geometric fusion updates existing visual tokens before language processing without adding language input tokens. The same language decoder performs latent recurrence and answer generation; the visual and question prefix remains accessible during decoding.}
 \label{fig:architecture}
 \end{figure}
 
@@ -25,22 +25,28 @@ We anchor the pose branch to the first view and compute
 T_{i\leftarrow0}=T_{w\leftarrow i}^{-1}T_{w\leftarrow0}.
 \label{eq:pose}
 \end{equation}
-This transform maps reference-camera coordinates to camera $i$. With rotation $R_{i\leftarrow0}$ and translation $t_{i\leftarrow0}$, we form
+This transform maps coordinates from the reference camera to camera $i$. With rotation $R_{i\leftarrow0}$ and translation $t_{i\leftarrow0}$, we form
 \begin{equation}
 p_i=[\operatorname{R6D}(R_{i\leftarrow0});t_{i\leftarrow0}],\quad
 P_i=W_p p_i+b_p,
 \end{equation}
-where $p_i\in\mathbb{R}^9$, translation is in meters, and $W_p$ maps 9 to 2048 dimensions. R6D uses the first two rotation columns~\cite{rotation}. The first view has an identity rotation and zero translation. The translation in Eq.~\ref{eq:pose} is not the camera's displacement expressed in world coordinates.
+where $p_i\in\mathbb{R}^9$, translation is in meters, and $W_p$ maps 9 to 2048 dimensions. R6D uses the first two rotation columns~\cite{rotation}. The reference transform is the identity in exact arithmetic, with possible small residuals from floating-point inversion and multiplication. The translation in Eq.~\ref{eq:pose} is expressed within the coordinate transform and does not directly represent camera displacement in world coordinates.
 
-The BIP3D branch instead uses $T_{0\leftarrow i}=T_{w\leftarrow0}^{-1}T_{w\leftarrow i}$ to express views in reference-camera coordinates. These two transforms are inverses with different roles. Their directions must be preserved in both caching and pose interventions.
+The BIP3D branch uses $T_{0\leftarrow i}=T_{w\leftarrow0}^{-1}T_{w\leftarrow i}$ to express each view in reference-camera coordinates. Its internal projection applies the inverse of this transform, together with the adjusted intrinsics, to project reference-frame points into the current view. The two relative transforms therefore serve complementary roles. They derive from the same calibration: BIP3D features already depend on camera pose, so removing only the direct pose embeddings does not remove all camera information.
 
 \subsection{Frozen Local RGB-D Representation}
-Depth is registered to the color-camera grid before feature extraction. The frozen BIP3D Tiny Det extractor~\cite{bip3d} receives RGB, measured depth, intrinsics, and reference-normalized extrinsics, producing multiscale 256-dimensional features. The implementation samples 48 local features per scene using a fixed image grid with nearby valid-depth alignment: 48 for one view, 24 per view for two views, and 16 per view for three views. Bilinear sampling across feature scales is followed by averaging.
+Measured depth is converted from millimeters to meters, back-projected using the depth intrinsics, and projected into the color-camera grid using the color intrinsics. The registered grid is then resized to the depth resolution, with nearest-pixel assignment and a z-buffer retaining the nearest valid depth. Uncovered pixels are set to zero. RGB is resized bilinearly to the same dimensions, and the color intrinsics are adjusted accordingly. The implementation retains valid depths of approximately 0.2--10 meters and assumes rectified pinhole inputs with coincident sensor coordinate frames. The training and development loader rejects nonidentity color/depth sensor extrinsics; arbitrary uncalibrated RGB-depth sensor pairs are outside this input convention.
 
-Before fusion, 16 features are selected deterministically for each view and projected by a trainable linear map from 256 to 2048 dimensions. The resulting tokens contain BIP3D feature values; raw XYZ coordinates, raw depth, object boxes, and target relation labels are not concatenated to them. Sampling does not use question-conditioned object regions. These choices keep the interface compact, but can discard details relevant to the question.
+The frozen BIP3D Tiny Det extractor~\cite{bip3d} uses an RGB backbone and neck, a depth backbone and neck, and a spatial enhancement module. The detection decoder, text encoder, and text-image enhancement modules are not used. RGB features are extracted with Swin-T and mapped to four scales with 256 channels. A narrow two-dimensional ResNet34 processes the single-channel metric depth and produces four scales with 32 channels. This depth backbone does not operate on a point cloud.
+
+At each feature location, the spatial enhancer constructs 64 candidate depths over 0.25--10 meters and transforms the corresponding points into the reference-camera frame. RGB and depth features predict softmax weights over these candidates. The weighted linear embeddings of candidate positions are concatenated with RGB and depth features, projected from 320 to 256 dimensions, combined with an RGB residual, and normalized. Consequently, the output combines appearance, depth, and positional information. Neither the candidate-depth distribution nor a sequence of ground-truth XYZ coordinates is passed separately to CGMF. Feature enhancement is performed per view in a common reference frame; cross-view object association through detection decoding is not part of this feature extraction path.
+
+The implementation samples 48 local features per scene using a fixed image grid: 48 for one view, 24 per view for two views, and 16 per view for three views. Grid positions are aligned with nearby valid-depth projections when available. Features sampled bilinearly from the four scales are averaged.
+
+Before fusion, 16 features per view are selected deterministically and projected from 256 to 2048 dimensions. The total geometry memory therefore contains 16, 32, or 48 tokens for one, two, or three views, respectively. The cached features are bound to the ordered RGB, depth, intrinsics, extrinsics, and extraction configuration. Sampling uses neither question text nor object identities or boxes. Raw XYZ coordinates, raw depth, boxes, answers, and relation labels are not concatenated as additional geometry tokens. This compact, question-independent sampling can omit details needed to bind geometric evidence to a target object.
 
 \subsection{Adapted Camera-Guided Fusion}
-We adapt SpaceMind's CGMF~\cite{spacemind} with visual, pose, and geometry widths of 2048 and an internal attention width of $d=256$. The following equations describe the computational roles; learned linear maps include their implementation biases.
+We adapt CGMF from SpaceMind~\cite{spacemind} using visual, pose, and geometry widths of 2048 and an internal attention width of $d=256$. Attention uses four heads of 64 dimensions, and fusion dropout is set to zero. The following equations summarize the computational roles; learned linear maps include their implementation biases.
 
 \paragraph{Camera-conditioned keys and values.}
 Let $\bar V_i=\operatorname{LN}(V_i)$ and $\bar G_i=\operatorname{LN}(G_i)$. Initial projections are
@@ -51,14 +57,14 @@ Project the current camera as $c_i=W_cP_i+b_c$. Broadcasting $c_i$ over the 16 t
 \begin{equation}
 B_i=\operatorname{MLP}([\bar G_i;\operatorname{repeat}_{16}(c_i)]).
 \end{equation}
-It is added to both $K_i^g$ and $U_i^g$. This is an additive feature bias, not a three-dimensional distance term added to attention logits.
+The same bias is added to $K_i^g$ and $U_i^g$. It conditions the feature representations; it does not impose an attention-logit constraint computed directly from metric distance or projection error.
 
 \paragraph{Geometry importance.}
-A geometry-only self-attention block produces context $C_i$. A learned residual projection and LayerScale combine it with $\bar G_i$ to predict sigmoid weights:
+A geometry-only self-attention block produces context $C_i$. A learned residual projection and LayerScale, initialized to a scale of 0.00001, combine this context with $\bar G_i$ to predict sigmoid weights:
 \begin{equation}
 w_i=\sigma\!\left(\operatorname{MLP}_w(W_r\bar G_i+\operatorname{LS}(C_i))\right).
 \end{equation}
-The weighted values are $\widetilde U_i^g=w_i\odot(U_i^g+B_i)$ and keys are $\widetilde K_i^g=K_i^g+B_i$. The importance weights have no separate depth-confidence supervision.
+The weighted values are $\widetilde U_i^g=w_i\odot(U_i^g+B_i)$ and keys are $\widetilde K_i^g=K_i^g+B_i$. These weights represent learned token importance and are not calibrated depth-confidence estimates with separate supervision.
 
 \paragraph{Local geometry and all-view cameras.}
 For view $i$, define camera memory rows $M^c_{i,j}=c_j+e_j+\mathbf{1}[i=j]e_{\rm cur}$, with sinusoidal view-order encoding $e_j$ and a learned current-view marker. Cross-attention uses
@@ -66,30 +72,32 @@ For view $i$, define camera memory rows $M^c_{i,j}=c_j+e_j+\mathbf{1}[i=j]e_{\rm
 K_i^*&=[M_i^c;\widetilde K_i^g],\quad U_i^*=[M_i^c;\widetilde U_i^g],\\
 H_i&=\operatorname{LN}\!\left(W_o\operatorname{Attn}(Q_i,K_i^*,U_i^*)\right).
 \end{align}
-Thus each view attends to its own 16 geometry tokens and all $S$ camera tokens. Other views' geometry tokens are not directly included in this attention memory. Cross-view reasoning can still occur later in the shared language context.
+Each visual query therefore attends to the 16 geometry tokens of its own view and all $S$ camera tokens. Geometry tokens from other views are not directly included in this memory. Camera tokens receive view-order encodings, whereas geometry tokens receive no additional encoding of their array indices; their feature values already contain spatial information from BIP3D. Cross-view integration can subsequently occur in the shared language context.
 
 \paragraph{Gating and residual integration.}
-Camera-conditioned SwiGLU produces an update proportional to $W_hH_i\odot\operatorname{SiLU}(W_gc_i+b_g)$. Let $F_{\rm CGMF}$ denote the complete reused block, including its internal visual residual and dropout. The outer integration is
+Camera-conditioned SwiGLU computes the visual update using $W_hH_i\odot\operatorname{SiLU}(W_gc_i+b_g)$. Let $F_{\rm CGMF}$ denote the complete reused block, including its internal visual residual and dropout. The outer integration is
 \begin{equation}
 V'_i=V_i+\alpha\big(F_{\rm CGMF}(V_i,P,G)-V_i\big),\quad\alpha_0=0.
 \label{eq:residual}
 \end{equation}
-The initial fused visual prefix equals the backbone prefix. This equality concerns fusion initialization, not the behavior of the model after optimization. No pretrained SpaceMind fusion weights are loaded.
+At initialization, the fused prefix equals the original visual prefix. The scalar $\alpha$ is unconstrained and can become negative; its sign alone does not indicate whether the branch is useful. Token importance weights, the camera-conditioned channel gate, and the outer residual scale serve distinct roles. At zero residual scale, the scale can receive a gradient before the remaining fusion parameters receive effective QA gradients. The implementation retains the internal residual addition followed by subtraction and outer scaling, so BF16 rounding can differ from an algebraically simplified update. Pose and geometry projections and CGMF are initialized without pretrained SpaceMind fusion weights.
 
 \subsection{Continuous Latents and Training}
-The original recurrent computation uses the preceding final hidden state as the next latent input embedding, iterating eight times. In schematic notation,
+The language decoder uses the final hidden state from the preceding computation as the input embedding at the next latent position, repeating this sequential operation eight times. The latent states are generated recurrently rather than implemented as eight independent learnable queries. In schematic notation,
 \begin{equation}
 Z=F_{\rm latent}(V',q),\qquad Z=(z_1,\ldots,z_8),
 \end{equation}
-followed by autoregressive answer decoding conditioned on $V'$, $q$, and $Z$. Latents have no assigned camera, scene, or relation roles. Geometry's influence is mediated by $V'$; this architecture alone does not show what geometric computations occur within $Z$.
+followed by autoregressive answer generation conditioned on $V'$, $q$, and $Z$ using the same decoder and LM head. The decoder has 36 layers, a hidden width of 2048, and grouped-query attention with 16 query heads and two K/V heads. Its causal attention retains access to the visual/question prefix and latent-related K/V states. Geometry can therefore affect answers both directly through the enhanced prefix $V'$ and indirectly through the recurrent latents. The latents have no prescribed camera, scene, or relation roles, and their intermediate geometric content is not explicitly supervised. Changes in $Z$ alone do not establish a causal contribution to answer quality.
 
-Training starts from the original pretrained 3DThinker-Mindcube checkpoint, not B0 at step 25K. The Qwen visual encoder and merger, base language model, and BIP3D extractor are frozen. Trainable components are language LoRA, pose and geometry projections, CGMF, and residual scaling. There are 29,933,568 LoRA parameters and 10,677,890 fusion-branch parameters, totaling 40,611,458.
+Training starts from the original pretrained 3DThinker-Mindcube checkpoint. The Qwen visual encoder and merger, base language model, and BIP3D extractor remain frozen. The trainable components comprise language LoRA, pose and geometry projections, CGMF, and residual scaling: 29,933,568 LoRA parameters and 10,677,890 fusion-branch parameters, totaling 40,611,458. Freezing the base language weights preserves gradient propagation through its input activations, allowing the assistant loss to train the fusion branch.
+
+The frozen Qwen visual branch uses a 32-layer ViT and a merger that combines neighboring patches in groups of four and projects them to width 2048. Dynamic resizing determines the visual-token count for each view; the count is not fixed at 256. Bridge padding is removed after fusion, preserving the actual token lengths, view order, and position indices. Image and text positions are handled by the original M-RoPE mechanism, which does not encode measured camera pose or metric object coordinates.
 
 For supervised assistant positions $\mathcal A$, the objective remains
 \begin{equation}
 \mathcal L=-\sum_{t\in\mathcal A}\log p_\theta(y_t\mid y_{<t},V',q).
 \end{equation}
-It includes the backbone's latent/format-token and answer supervision; user input positions are masked. No geometric regression, distillation, contrastive objective, or reinforcement learning term is added.
+The supervised assistant sequence includes latent-boundary and latent-placeholder positions, format tokens, and the answer. During training, latent inputs are sequentially replaced with the preceding hidden states while retaining the computation graph. During generation, the controller performs eight continuous updates before returning to vocabulary-based decoding. User-prefix and padding positions are masked in the objective. No geometric regression, distillation, contrastive objective, or reinforcement learning term is added; internal stage names do not change this supervised objective.
 
 \subsection{Matched GENERIC Control}
-GENERIC retains all inputs, projections, token counts, parameters, and initialization. It changes two conditioning sources: the K/V bias MLP uses the geometry token and its key representation instead of the current camera projection, and the output gate uses the mean visual query instead of the current camera projection. All-view camera tokens remain ordinary attention memory. Comparing CGMF with GENERIC isolates these two camera-specific conditioning choices jointly; it does not isolate the effect of having pose information at all.
+GENERIC retains the same inputs, projections, token counts, trainable parameter count, and initialization. It changes two conditioning sources: the K/V bias MLP receives the geometry token and its key representation, and the output gate receives the mean visual query instead of the current camera projection. All-view camera tokens remain available as attention memory. Moreover, the BIP3D features retain their calibration-dependent spatial content. The comparison therefore isolates the two camera-specific conditioning choices jointly, rather than the presence or absence of camera information.
