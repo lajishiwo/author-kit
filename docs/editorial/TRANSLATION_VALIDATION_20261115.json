@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-15",
+  "coverage": {
+    "sec/0_abstract.tex": {
+      "english_sha256": "eb3452017e636054062b1fcb15800d4e1f7af09b65d44368d98aeb98e852b441",
+      "translation_sha256": "648686a675c900fd2c92b05201b0520d6d843dd399a6dd3a36da4a0e1eeba406",
+      "citation_keys": []
+    },
+    "sec/1_intro.tex": {
+      "english_sha256": "3687df2b12c5fe05d750e6e900ed22ab3d9ddaa0187e6b142f922377de2c9f4d",
+      "translation_sha256": "3db0a53dd614dcd47dd99d737aed9134f53be6a45103562be79b96cf9b78edeb",
+      "citation_keys": [
+        "spar",
+        "thinker",
+        "bip3d",
+        "spacemind",
+        "lora"
+      ]
+    },
+    "sec/2_related_work.tex": {
+      "english_sha256": "b98d7b086423ac663e041b5d00fa888ad537893b8069716edc72039e742af3f9",
+      "translation_sha256": "feb3f6a04e17b75d84e124defe4924a00888ecd2120f643679d403a9b0dcdf71",
+      "citation_keys": [
+        "thinker",
+        "spacemind",
+        "bip3d",
+        "rotation",
+        "lora",
+        "spar"
+      ]
+    },
+    "sec/3_method.tex": {
+      "english_sha256": "c631b9088d65cbb3912194cac0d3c07ab1ab3033691c7e619fd0768d2147afba",
+      "translation_sha256": "06455d26652cf1e02659471484f8413f1ba184fa3295468657a532495137eb78",
+      "citation_keys": [
+        "rotation",
+        "bip3d",
+        "spacemind"
+      ]
+    },
+    "sec/4_experiments.tex": {
+      "english_sha256": "036b3c052b641dc319637de1ae927cea78c4f189084cd49829a85bcadf5b3243",
+      "translation_sha256": "147a4c4c244d76ae2837a14b3e3acfd854405bb4316eeb48b45582643190bba9",
+      "citation_keys": [
+        "spar"
+      ]
+    },
+    "sec/5_conclusion.tex": {
+      "english_sha256": "33b6c891239ee76a290a558fd744e58a139b1d3859a80427f89044d83ea1f1a3",
+      "translation_sha256": "762aabf62d81b21cef6219cdf13cef59fe5d30648afaf045439b28b5a6451cf6",
+      "citation_keys": []
+    }
+  },
+  "tables_generated_from_verified_snapshot": true,
+  "method_display_equations_copied_verbatim": true,
+  "full_translation": "CVPR2027_TRANSLATION_ZH.md",
+  "front_translation": "FRONT_THREE_TRANSLATION_ZH.md",
+  "checks": [
+    "all six manuscript sections translated",
+    "all displayed method equations match English after removing environment wrappers/labels",
+    "all citation keys preserved by section",
+    "four result tables generated from verified snapshot",
+    "LLM usage statement translated",
+    "no English manuscript edits in this translation step"
+  ],
+  "translation_sha256": "8f76fbab9f0a3f6cab613ea75cc1a9baef8445aec9dde8f4c5723f0b2e054332"
+}

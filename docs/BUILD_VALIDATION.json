@@ -1,22 +1,34 @@
 {
-  "date": "2026-11-12",
+  "date": "2026-11-15",
   "timezone": "Asia/Shanghai",
   "branch": "main",
-  "engine": "Tectonic 0.17.0 (XeTeX), T1 font encoding",
-  "pdf_pages": 7,
+  "purpose": "CVPR 2027 anonymous submission only",
+  "engine": "Tectonic 0.17.0, T1 encoding",
+  "pdf_pages": 8,
+  "main_text_end_page": 7,
   "checks": [
     "compile completed",
-    "no LaTeX errors",
     "no undefined references or citations",
     "no overfull boxes",
-    "no font substitution warnings",
+    "no font substitution",
     "anonymous review mode",
-    "no identifying paths or email addresses in PDF",
-    "all six metric artifacts matched",
-    "Overall and all cognitive groups recomputed",
-    "CGMF/GENERIC MODEL.json hashes matched to protocol",
-    "official style, preamble and bibliography style unchanged"
+    "official style, preamble and bibliography unchanged",
+    "original method math unchanged",
+    "31 original evaluation records verified and raw sample scores reaggregated",
+    "original 10K scores retained",
+    "matched questions across arms and checkpoints",
+    "new checkpoint manifests rehashed",
+    "bootstrap point estimates checked; existing confidence intervals retained",
+    "language-only numeric/math/citation/paragraph invariants passed",
+    "LLM disclosure retained"
   ],
-  "pdf_sha256": "41c54b4ff4e4fa8198f670c9b85b66987bb7592071c5db48c6de822f2dacf17f",
-  "known_toolchain_warning": "Bundled lineno.sty line 296 contains a non-UTF-8 byte; Tectonic replaces it while reading. The official package was not edited."
+  "pdf_sha256": "1b530cc3b668bc5bf3ec21385638fc29633ade89b571e3f14e93a654b6dd82cb",
+  "evidence_sha256": "900eada22115815db10bdab95e2c03b1a2a6907f1be03e6b2536f1249c07acb9",
+  "known_toolchain_warning": "Bundled lineno.sty line 296 contains a non-UTF-8 byte. Tectonic reports replacement while reading; official packages were not edited.",
+  "remaining_author_review": [
+    "scientific interpretation",
+    "complete AI-use disclosure for underlying research",
+    "data permissions and split provenance"
+  ],
+  "remote_push_performed": false
 }

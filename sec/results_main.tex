@@ -1,20 +1,30 @@
 \begin{table}[t]
 \centering\small
-\begin{tabular}{@{}lrrrr@{}}
+\begin{tabular}{@{}llrr@{}}
 \toprule
-Model & Overall & Low & Middle & High \\
+Steps & Model & Tiny & Full \\
 \midrule
-\multicolumn{5}{c}{Tiny} \\
-B0 & 45.596 & 43.700 & 36.107 & 50.444 \\
-GENERIC & 44.596 & 43.125 & 34.307 & 49.333 \\
-CGMF & 45.538 & 43.950 & 34.387 & 50.667 \\
+10K & B0 & 45.596 & 42.348 \\
+10K & GENERIC & 44.596 & 41.439 \\
+10K & CGMF & 45.538 & 41.899 \\
 \midrule
-\multicolumn{5}{c}{Full} \\
-B0 & 42.348 & 39.667 & 27.769 & 49.590 \\
-GENERIC & 41.439 & 40.108 & 28.503 & 46.934 \\
-CGMF & 41.899 & 40.165 & 28.559 & 47.888 \\
+15K & B0 & 46.828 & 43.112 \\
+15K & GENERIC & 46.244 & 43.168 \\
+15K & CGMF & 46.592 & 42.728 \\
+\midrule
+20K & B0 & -- & -- \\
+20K & GENERIC & 51.900 & 46.752 \\
+20K & CGMF & 51.220 & 47.253 \\
+\midrule
+25K & B0 & 51.854 & 48.207 \\
+25K & GENERIC & 53.568 & 49.052 \\
+25K & CGMF & 51.076 & 47.294 \\
+\midrule
+30K & B0 & 53.016 & 49.489 \\
+30K & GENERIC & 54.296 & 50.345 \\
+30K & CGMF & 53.280 & 48.530 \\
 \bottomrule
 \end{tabular}
-\caption{Verified seed0, 10K SPAR-Bench scores. B0 is historical; GENERIC and CGMF additionally use measured depth and calibration. Overall is a task macro average.}
+\caption{SPAR-Bench Overall scores at all evaluated checkpoints, seed0. B0 uses RGB; GENERIC and CGMF additionally use measured depth and calibration. A dash denotes an unevaluated checkpoint, not zero. All three arms continue from 25K to 30K.}
 \label{tab:main}
 \end{table}
